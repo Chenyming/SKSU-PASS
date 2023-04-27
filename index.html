@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>沈阳师范大学</title>
+    <style>
+        .frm {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            border: 0px;
+            padding: 0px;
+            display: block;
+        }
+        .text_first {
+            font-size: 30px;
+            white-space: nowrap;
+        }
+        .text_second {
+            font-size: 30px;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+        .text_div {
+            position: absolute;
+            z-index: 100;
+        }
+        .text_time_1 {
+            font-size: 25px;
+        }
+        .text_time_2 {
+            font-size: 40px;
+            white-space: nowrap;
+            font-weight: lighter;
+        }
+    </style>
+    <script src="jquery.min-v3.6.4.js"></script>
+    <script>
+        function adjust_img(id) {
+            console.log("start");
+            let ele_id = "img[id='" + id + "']"
+            console.log($("img[id='center']").width());
+            let scale = $("img[id='center']").width()/$(ele_id).width();
+            let width = $(ele_id).width() * scale;
+            let height = $(ele_id).height() * scale;
+            console.log(width + ", " + height)
+            $(ele_id).width(width);
+            $(ele_id).height(height);
+            console.log("end");
+        };
+        function adj_pp() {
+            let pp = $("img[id='pp']");
+            let width = pp.width();
+            let height = pp.height();
+            pp.width(width/2);
+            pp.height(height/2);
+        }
+
+        function adj_rel_pos(elemA, elemB, x, y) {
+            const elemAWidth = elemA.width();
+            const elemAHeight = elemA.height();
+
+            const elemBWidth = elemB.width();
+            const elemBHeight = elemB.height();
+
+            const elemACenterX = elemA.offset().left + elemAWidth / 2;
+            const elemACenterY = elemA.offset().top + elemAHeight / 2;
+
+            const elemBCenterX = elemB.offset().left + elemBWidth / 2;
+            const elemBCenterY = elemB.offset().top + elemBHeight / 2;
+
+            const distanceX = elemACenterX - elemBCenterX;
+            const distanceY = elemACenterY - elemBCenterY;
+
+            elemA.offset({
+                left: elemA.offset().left - distanceX + x,
+                top: elemA.offset().top - distanceY + y
+            });
+        }
+        function adj_rel_pos_by_imgId(id_A, id_B, x, y) {
+            let ele_id_A = "img[id='" + id_A + "']"
+            let ele_id_B = "img[id='" + id_B + "']"
+            let elemB = $(ele_id_B);
+            let elemA = $(ele_id_A);
+            adj_rel_pos(elemA, elemB, x, y);
+        }
+        function adj_rel_pos_by_sel(sel_A, sel_B, x, y) {
+            let elemA = $(sel_A);
+            let elemB = $(sel_B);
+            adj_rel_pos(elemA, elemB, x, y);
+        }
+        function set_time() {
+            let t = new Date();
+			console.log(t.toString());
+            console.log($("p[class='text_time_2']"));
+			let strs = t.toString().split(' ');
+			for (let i in strs) {
+				console.log(strs[i]);
+			}
+			let convert = {'Apr':'04'};
+			let mon = convert[strs[1]];
+			let showtime = strs[3]+'-'+mon+'-'+strs[2]+' '+strs[4];
+			$("span[class='text_time_2']").text(showtime);
+        }
+        $(window).on('load', function() {
+            console.log("ready");
+            setTimeout(adjust_img('head'), 1000);
+            setTimeout(adjust_img('center'), 1100);
+            setTimeout(adjust_img('tail'), 1200);
+            setTimeout(adj_pp(), 1200);
+            setTimeout(set_time(), 1200);
+            setTimeout(adj_rel_pos_by_imgId('logo', 'head', -250, 0), 1300);
+            setTimeout(adj_rel_pos_by_imgId('line', 'center', 0, 250), 1300);
+            setTimeout(adj_rel_pos_by_imgId('pp', 'center', 0, -200), 1300);
+            setTimeout(adj_rel_pos_by_sel("div[id='text_1']", "img[id='center']", -8, -100), 1300);
+            setTimeout(adj_rel_pos_by_sel("div[id='text_2']", "img[id='center']", 0, -50), 1300);
+            setTimeout(adj_rel_pos_by_sel("div[id='text_3']", "img[id='center']", -5, 0), 1300);
+            setTimeout(adj_rel_pos_by_sel("div[id='text_4']", "img[id='center']", -130, 150), 1300);
+            setTimeout(adj_rel_pos_by_sel("div[id='text_5']", "img[id='center']", -10, 200), 1300);
+        });
+
+    </script>
+</head>
+<body>
+<p class="box">
+<div overflow="hidden">
+    <div id="main">
+        <img id="logo" src="logo-GIF.gif">
+        <img id="head" src="head.jpg" class="frm">
+        <img id="center" src="center.jpg" class="frm">
+        <img id="tail" src="tail.jpg" class="frm">
+        <img id="line" src="line.gif">
+        <img id="pp" src="pp.png">
+    </div>
+    <div id="text_1" class="text_div">
+        <div><span class="text_first">   持证人: <b>郭小宇</b></span></div>
+    </div>
+    <div id="text_2" class="text_div">
+        <div><span class="text_first">学院/单位: <b>国际商学院</b></span></div>
+    </div>
+    <div id="text_3" class="text_div">
+        <div><span class="text_first"> 人员类型: <b>外聘教师</b></span></div>
+    </div>
+    <div id="text_4" class="text_div">
+        <div><span class="text_time_1"> 生成时间:</span></div>
+    </div>
+    <div id="text_5" class="text_div">
+        <div><span class="text_time_2"></span></div>
+    </div>
+</div>
+</p>
+</body>
+</html>
